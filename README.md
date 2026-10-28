@@ -41,13 +41,9 @@ cd IRIS-WSG-HE
 
 📊 Data Provenance
 Source: Hessisches Landesamt für Naturschutz, Umwelt und Geologie (HLNUG)
-
 Endpoint: https://gds.hessen.de/wfs/hlnug/wasserschutz
-
 Layer: he_wasserschutz_zonen
-
 Transformation: Validated and transformed to EPSG:25832.
-
 Destination: iris_staging.water_protection_zones
 
 🗺️ Schema Mapping
@@ -90,16 +86,15 @@ LIMIT 5;
 The project includes a pytest suite covering schema mapping and geometry repairs, using the representative fixture data.
 
 1. Create and activate a virtual environment:
-
 cmd
 python -m venv .venv
 .venv\Scripts\activate
-2. Install development dependencies:
 
+2. Install development dependencies:
 cmd
 pip install -e ".[dev]"
-3. Run the tests:
 
+3. Run the tests:
 cmd
 python -m pytest
 Expect all 6 tests to pass.
