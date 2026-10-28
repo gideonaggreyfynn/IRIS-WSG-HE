@@ -12,8 +12,10 @@ Built to support site-permitting and groundwater restriction screening, this mod
 *   **Idempotent Database Loading:** Utilizes PostgreSQL's `ON CONFLICT DO UPDATE` to ensure running the pipeline multiple times updates records rather than creating duplicates.
 
 ## 📂 Project Details
-Structure
+
 ```
+Structure
+
 IRIS-WSG-HE/
 ├── app/                  # Core logic (WFS client, mapping, validation, loader)
 ├── fixtures/             # Mock GML data for offline demonstration
