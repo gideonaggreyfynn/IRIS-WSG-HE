@@ -29,3 +29,10 @@ To get started with this project locally, clone the repository and navigate into
 ```bash
 git clone https://github.com/gideonaggreyfynn/IRIS-WSG-HE
 cd IRIS-WSG-HE
+
+Data Provenance
+Source: Hessisches Landesamt für Naturschutz, Umwelt und Geologie (HLNUG)
+Endpoint: https://gds.hessen.de/wfs/hlnug/wasserschutz
+Layer: he_wasserschutz_zonen
+Transformation: Validated and transformed to EPSG:25832.
+Destination: iris_staging.water_protection_zones
