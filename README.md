@@ -36,3 +36,10 @@ Endpoint: https://gds.hessen.de/wfs/hlnug/wasserschutz
 Layer: he_wasserschutz_zonen
 Transformation: Validated and transformed to EPSG:25832.
 Destination: iris_staging.water_protection_zones
+
+🚀 Run Instructions
+Prerequisite: Ensure Docker Desktop is running.
+Start the database and run the ingestion pipeline:
+bash
+docker compose up --build
+The pipeline will wait for the database to be healthy, run the init.sql script to create the schema, and execute the ingestion.
