@@ -2,7 +2,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from app.config import settings
 
-# Notice the +psycopg2 in the URL below!
+# IT MUST SAY postgresql+psycopg2://
 DATABASE_URL = (
     f"postgresql+psycopg2://{settings.postgres_user}:{settings.postgres_password}"
     f"@{settings.postgres_host}:{settings.postgres_port}/{settings.postgres_db}"
