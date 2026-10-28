@@ -15,7 +15,6 @@ Built to support site-permitting and groundwater restriction screening, this mod
 
 ```
 Structure
-
 IRIS-WSG-HE/
 ├── app/                  # Core logic (WFS client, mapping, validation, loader)
 ├── fixtures/             # Mock GML data for offline demonstration
