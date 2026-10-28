@@ -24,14 +24,9 @@ IRIS-WSG-HE/
 └── main.py               # Pipeline entry point
 
 📋 Requirements
-Windows 11
-
 Docker Desktop & Docker Compose
-
 PostgreSQL 16 with PostGIS 3.4 (automatically handled by Docker)
-
 Python 3.11+ (if running tests locally)
-
 Git
 
 📥 Clone the Repository
