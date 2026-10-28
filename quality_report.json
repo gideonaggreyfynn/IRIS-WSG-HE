@@ -1,0 +1,15 @@
+{
+    "evidence_of_acceptance": {
+        "total_features_loaded": 1,
+        "crs_transformed_to": "EPSG:25832",
+        "duplicate_validation": "PASSED (Upsert using ON CONFLICT)"
+    },
+    "rejected_data_and_edge_cases": {
+        "unknown_zone_codes_found": 0,
+        "missing_extraction_rates": 1
+    },
+    "coverage_limitations": [
+        "Extraction rates are not published for all zones; stored as NULL.",
+        "Live WFS access may be rate-limited (HTTP 429); fixture fallback used."
+    ]
+}

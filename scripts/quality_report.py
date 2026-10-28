@@ -6,6 +6,7 @@ from app.database import get_engine
 def generate_report():
     engine = get_engine()
     
+    # Query the staging table
     query = f"SELECT * FROM {settings.staging_schema}.{settings.staging_table}"
     gdf = gpd.read_postgis(query, engine, geom_col="geometry")
     
@@ -13,6 +14,7 @@ def generate_report():
     unknown_zones = int((gdf["restriction_category"] == "Unknown").sum())
     missing_rates = int(gdf["extraction_rate"].isna().sum())
     
+    # Construct the report dictionary
     report = {
         "evidence_of_acceptance": {
             "total_features_loaded": len(gdf),
@@ -29,6 +31,7 @@ def generate_report():
         ]
     }
     
+    # Write the report to a JSON file
     with open("quality_report.json", "w") as f:
         json.dump(report, f, indent=4)
         

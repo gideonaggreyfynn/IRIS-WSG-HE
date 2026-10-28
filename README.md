@@ -76,7 +76,7 @@ docker compose up --build
 The pipeline will wait for the database to be healthy, run the init.sql script to create the schema, and execute the ingestion.
 
 Generate the Quality/Error Report:
-docker compose run --rm ingest python scripts/quality_report.py
+docker compose run --rm ingest python -m scripts.quality_report
 
 🔍 Validation Query
 SELECT 
