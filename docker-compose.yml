@@ -1,0 +1,38 @@
+version: "3.9"
+
+services:
+  postgis:
+    image: postgis/postgis:16-3.4
+    container_name: iris-staging-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-iris_staging}
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d iris_staging"]
+      interval: 5s
+      retries: 5
+
+  ingest:
+    build: .
+    depends_on:
+      postgis:
+        condition: service_healthy
+    environment:
+      POSTGRES_HOST: postgis
+      POSTGRES_PORT: 5432
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+      POSTGRES_DB: ${POSTGRES_DB:-iris_staging}
+      WFS_USE_FIXTURE: "true"
+    volumes:
+      - ./fixtures:/app/fixtures
+
+volumes:
+  pgdata:
