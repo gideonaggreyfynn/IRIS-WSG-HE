@@ -40,6 +40,23 @@ Destination: iris_staging.water_protection_zones
 🚀 Run Instructions
 Prerequisite: Ensure Docker Desktop is running.
 Start the database and run the ingestion pipeline:
+
 bash
 docker compose up --build
+
 The pipeline will wait for the database to be healthy, run the init.sql script to create the schema, and execute the ingestion.
+
+ Automated Testing
+The project includes a pytest suite covering schema mapping and geometry repairs.
+Create and activate a virtual environment:
+cmd
+python -m venv .venv
+.venv\Scripts\activate
+Install development dependencies:
+cmd
+pip install -e ".[dev]"
+Run the tests:
+cmd
+python -m pytest
+Expect all 6 tests to pass.
+
