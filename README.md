@@ -27,5 +27,5 @@ The pipeline operates through the following flow:
 To get started with this project locally, clone the repository and navigate into the directory:
 
 ```bash
-git clone https://github.com/YourUsername/IRIS-WSG-HE.git
+git clone https://github.com/gideonaggreyfynn/IRIS-WSG-HE
 cd IRIS-WSG-HE
