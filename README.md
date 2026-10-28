@@ -16,14 +16,14 @@ The pipeline follows a standard ETL flow, orchestrated via Docker Compose:
 
 ```mermaid
 graph TD
-    A[HLNUG WFS Server\nor Local GML Fixture] -->|Extract: Raw GML| B(app/wfs_client.py)
+    A[HLNUG WFS Server or Local Fixture] -->|Extract: Raw GML| B(app/wfs_client.py)
     B -->|Parse XML| C(main.py)
     C -->|Transform: Map Zones| D(app/schema_mapping.py)
-    C -->|Transform: Repair & Reproject| E(app/validation.py)
-    D --> F{GeoDataFrame}
+    C -->|Transform: Repair Geometry| E(app/validation.py)
+    D --> F[GeoDataFrame]
     E --> F
     F -->|Load: Upsert| G(app/loader.py)
-    G -->|Insert/Update| H[(PostGIS DB:\niris_staging.water_protection_zones)]
+    G -->|Insert/Update| H[(PostGIS DB: iris_staging.water_protection_zones)]
 
 IRIS-WSG-HE/
 ├── app/                  # Core logic (WFS client, mapping, validation, loader)
