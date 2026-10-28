@@ -24,8 +24,7 @@ graph TD
     E --> F
     F -->|Load: Upsert| G(app/loader.py)
     G -->|Insert/Update| H[(PostGIS DB:\niris_staging.water_protection_zones)]
-
-
+<!-- ^^^ THIS LINE OF BACKTICKS WAS MISSING ^^^ -->
 
 IRIS-WSG-HE/
 ├── app/                  # Core logic (WFS client, mapping, validation, loader)
