@@ -7,24 +7,12 @@ Built to support site-permitting and groundwater restriction screening, this mod
 
 ## ✨ Key Features
 *   **Resilient Data Acquisition:** Implements OGC WFS paging and includes an automated fallback to a local fixture (`wfs_features_sample.gml`) if the live service rate-limits (HTTP 429).
-*   **Strict Classification Mapping:** Official zone codes (e.g., "I", "II", "IIIA") are mapped using a strict, traceable dictionary—no fragile substring heuristics.
+*   **Strict Classification Mapping:** Official zone codes are mapped using a strict, traceable dictionary—no fragile substring heuristics.
 *   **Geospatial Integrity:** Automatically detects and repairs invalid multipart polygons and transforms geometries to `EPSG:25832`.
 *   **Idempotent Database Loading:** Utilizes PostgreSQL's `ON CONFLICT DO UPDATE` to ensure running the pipeline multiple times updates records rather than creating duplicates.
 
-## 🏗️ System Architecture
-The pipeline follows a standard ETL flow, orchestrated via Docker Compose:
-
-```mermaid
-graph TD
-    A[HLNUG WFS Server or Local Fixture] -->|Extract: Raw GML| B(app/wfs_client.py)
-    B -->|Parse XML| C(main.py)
-    C -->|Transform: Map Zones| D(app/schema_mapping.py)
-    C -->|Transform: Repair Geometry| E(app/validation.py)
-    D --> F[GeoDataFrame]
-    E --> F
-    F -->|Load: Upsert| G(app/loader.py)
-    G -->|Insert/Update| H[(PostGIS DB: iris_staging.water_protection_zones)]
-
+## 📂 Project Structure
+```text
 IRIS-WSG-HE/
 ├── app/                  # Core logic (WFS client, mapping, validation, loader)
 ├── fixtures/             # Mock GML data for offline demonstration
@@ -46,6 +34,8 @@ Python 3.11+ (if running tests locally)
 
 Git
 
+📥 Clone the Repository
+
 git clone https://github.com/gideonaggreyfynn/IRIS-WSG-HE.git
 cd IRIS-WSG-HE
 
@@ -60,6 +50,17 @@ Transformation: Validated and transformed to EPSG:25832.
 
 Destination: iris_staging.water_protection_zones
 
+🗺️ Schema Mapping
+To satisfy the acceptance criteria (no fragile substring rules), the source attributes are mapped strictly using a dictionary lookup in app/schema_mapping.py:
+
+Source Code	Mapped Restriction Category
+I, 1		Zone I
+II, 2, 2o	Zone II
+III, 3		Zone III
+IIIA		Zone IIIA
+IIIB		Zone IIIB
+Any other value	Unknown (explicitly flagged)
+
 ⚠️ Assumptions & Limitations
 Rate Limiting: The HLNUG WFS service limits requests and may block rapid access. The fixture fallback is provided to ensure reproducible testing without bypassing server restrictions.
 
@@ -72,20 +73,33 @@ Prerequisite: Ensure Docker Desktop is running.
 
 Start the database and run the ingestion pipeline:
 docker compose up --build
-
 The pipeline will wait for the database to be healthy, run the init.sql script to create the schema, and execute the ingestion.
 
 Generate the Quality/Error Report:
 docker compose run --rm ingest python scripts/quality_report.py
 
+🔍 Validation Query
+SELECT 
+    source_zone_id, 
+    restriction_category, 
+    ST_AsText(geometry) 
+FROM iris_staging.water_protection_zones 
+LIMIT 5;
+
 🧪 Automated Testing
-The project includes a pytest suite covering schema mapping and geometry repairs.
+The project includes a pytest suite covering schema mapping and geometry repairs, using the representative fixture data.
+
 1. Create and activate a virtual environment:
+
+cmd
 python -m venv .venv
 .venv\Scripts\activate
-
 2. Install development dependencies:
-pip install -e ".[dev]"
 
+cmd
+pip install -e ".[dev]"
 3. Run the tests:
+
+cmd
 python -m pytest
+Expect all 6 tests to pass.
