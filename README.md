@@ -24,3 +24,15 @@ graph TD
     E --> F
     F -->|Load: Upsert| G(app/loader.py)
     G -->|Insert/Update| H[(PostGIS DB:\niris_staging.water_protection_zones)]
+
+
+
+IRIS-WSG-HE/
+├── app/                  # Core logic (WFS client, mapping, validation, loader)
+├── fixtures/             # Mock GML data for offline demonstration
+├── scripts/              # Quality report generation
+├── tests/                # Automated pytest suite
+├── Dockerfile            # Python environment container
+├── docker-compose.yml    # Multi-container setup (PostGIS + Ingest)
+├── init.sql              # Database schema initialization
+└── main.py               # Pipeline entry point
