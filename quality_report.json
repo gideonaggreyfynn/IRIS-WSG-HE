@@ -1,6 +1,6 @@
 {
     "evidence_of_acceptance": {
-        "total_features_loaded": 1,
+        "total_features_loaded": 2,
         "crs_transformed_to": "EPSG:25832",
         "duplicate_validation": "PASSED (Upsert using ON CONFLICT)"
     },

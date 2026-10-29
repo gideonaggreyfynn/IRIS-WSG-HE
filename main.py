@@ -32,7 +32,18 @@ def main():
         gdf['restriction_category'] = "Unknown"
 
     gdf = gdf.rename(columns={'zone': 'zone_code'})
-    gdf['source_zone_id'] = gdf['id'] if 'id' in gdf.columns else "unknown_id"
+    
+    # --- THE FIX IS HERE ---
+    # Robustly handle the ID column so we don't get duplicates
+    if 'id' in gdf.columns:
+        gdf['source_zone_id'] = gdf['id'].astype(str)
+    elif 'gml_id' in gdf.columns:
+        gdf['source_zone_id'] = gdf['gml_id'].astype(str)
+    else:
+        # Create a unique ID using the row index if no ID is found in the GML
+        gdf['source_zone_id'] = [f"fixture_zone_{i}" for i in range(len(gdf))]
+    # -----------------------
+
     gdf['state_code'] = "HE"
     gdf['source_url'] = settings.wfs_url
     
