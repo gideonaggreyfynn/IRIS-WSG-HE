@@ -64,7 +64,8 @@ Prerequisite: Ensure Docker Desktop is running.
 cmd:
 docker compose up -d --build
 
-(The pipeline will wait for the database to be healthy, run the init.sql script to create the schema, and execute the ingestion. The -d flag runs it in the background so you keep your terminal prompt).
+(The pipeline will wait for the database to be healthy, run the init.sql script to create the schema, and execute 
+the ingestion. The -d flag runs it in the background so you keep your terminal prompt).
 
 2. Wait for Ingestion to Complete:
 Since it runs in the background, you can verify the ingestion finished successfully by running:
