@@ -54,32 +54,33 @@ IIIA		Zone IIIA
 IIIB		Zone IIIB
 Any other value	Unknown (explicitly flagged)
 
-⚠️ Assumptions & Limitations
+## ⚠️ Assumptions & Limitations
 Rate Limiting: The HLNUG WFS service limits requests and may block rapid access. The fixture fallback is provided to ensure reproducible testing without bypassing server restrictions.
 
 Missing Attributes: Where extraction rates or update dates are absent in the source data, they are explicitly stored as NULL.
 
 Staging Only: This module strictly writes to the iris_staging schema and does not interact with production systems (iris_core).
 
-🚀 Run Instructions
-Prerequisite: Ensure Docker Desktop is running.
+## 🚀 Run Instructions
+**Prerequisite:** Ensure Docker Desktop is running.
 
-Start the database and run the ingestion pipeline:
-docker compose up --build
-The pipeline will wait for the database to be healthy, run the init.sql script to create the schema, and execute the ingestion.
+**1. Start the database and run the ingestion pipeline:**
+```cmd
+docker compose up -d --build
 
-Generate the Quality/Error Report:
-docker compose run --rm ingest python -m scripts.quality_report
+(The pipeline will wait for the database to be healthy, run the init.sql script to create the schema, and execute the ingestion. The -d flag runs it in the background so you keep your terminal prompt.)
+
+Wait for Ingestion to Complete:
+Since it runs in the background, you can verify the ingestion finished successfully by running:
+cmd
+docker compose logs ingest
+(Wait until you see Ingestion complete: 2 records upserted and exited with code 0).
 
 🔍 Validation Query
-SELECT 
-    source_zone_id, 
-    restriction_category, 
-    ST_AsText(geometry) 
-FROM iris_staging.water_protection_zones 
-LIMIT 5;
+cmd
+docker exec -it iris-staging-db psql -U postgres -d iris_staging -c "SELECT source_zone_id, restriction_category, ST_AsText(geometry) FROM iris_staging.water_protection_zones LIMIT 5;"
 
-🧪 Automated Testing
+## 🧪 Automated Testing
 The project includes a pytest suite covering schema mapping and geometry repairs, using the representative fixture data.
 
 1. Create and activate a virtual environment:
@@ -91,7 +92,16 @@ python -m venv .venv
 cmd
 pip install -e ".[dev]"
 
-3. Run the tests:
+3. Generate the Quality/Error Report:
+cmd
+python -m scripts.quality_report
+(This will output quality_report.json directly into your project folder).
+
+4. Run the tests:
 cmd
 python -m pytest
 Expect all 6 tests to pass.
+
+5. Clean up
+cmd
+docker compose down
