@@ -75,11 +75,11 @@ docker compose logs ingest
 
 (Wait until you see Ingestion complete: 2 records upserted and exited with code 0).
 
-**3. Validation Query:**
+3. Validation Query:
 Prove the data was loaded correctly by running this query directly inside the running Docker container. 
 
 *(Note: Ensure you copy and paste this as a single continuous line):*
-```cmd
+cmd:
 docker exec -it iris-staging-db psql -U postgres -d iris_staging -c "SELECT source_zone_id, restriction_category, ST_AsText(geometry) FROM iris_staging.water_protection_zones LIMIT 5;"
 
 🧪 Automated Testing
