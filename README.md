@@ -81,6 +81,7 @@ Prove the data was loaded correctly by running this query directly inside the ru
 *(Note: Ensure you copy and paste this as a single continuous line):*
 cmd:
 docker exec -it iris-staging-db psql -U postgres -d iris_staging -c "SELECT source_zone_id, restriction_category, ST_AsText(geometry) FROM iris_staging.water_protection_zones LIMIT 5;"
+(If your terminal displays (END) at the bottom, simply press the "q" key on your keyboard to exit the view and return to the command prompt).
 
 🧪 Automated Testing
 The project includes a pytest suite covering schema mapping and geometry repairs, using the representative fixture data.
