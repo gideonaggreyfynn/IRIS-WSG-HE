@@ -53,7 +53,8 @@ IIIB		Zone IIIB
 Any other value	Unknown (explicitly flagged)
 
 ⚠️ Assumptions & Limitations
-Rate Limiting: The HLNUG WFS service limits requests and may block rapid access. The fixture fallback is provided to ensure reproducible testing without bypassing server restrictions.
+Rate Limiting: The HLNUG WFS service limits requests and may block rapid access. 
+The fixture fallback is provided to  ensure reproducible testing without bypassing server restrictions.
 Missing Attributes: Where extraction rates or update dates are absent in the source data, they are explicitly stored as NULL.
 Staging Only: This module strictly writes to the iris_staging schema and does not interact with production systems (iris_core).
 
@@ -77,7 +78,9 @@ docker compose logs ingest
 3. Validation Query:
 Prove the data was loaded correctly by running this query directly inside the running Docker container:
 cmd:
-docker exec -it iris-staging-db psql -U postgres -d iris_staging -c "SELECT source_zone_id, restriction_category, ST_AsText(geometry) FROM iris_staging.water_protection_zones LIMIT 5;"
+docker exec -it iris-staging-db psql -U postgres -d iris_staging -c 
+"SELECT source_zone_id, restriction_category, 
+ST_AsText(geometry) FROM iris_staging.water_protection_zones LIMIT 5;"
 
 🧪 Automated Testing
 The project includes a pytest suite covering schema mapping and geometry repairs, using the representative fixture data.
