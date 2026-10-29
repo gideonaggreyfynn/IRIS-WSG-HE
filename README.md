@@ -91,21 +91,21 @@ python -m venv .venv
 .venv\Scripts\activate
 
 2. Install development dependencies:
-cmd
+cmd:
 pip install -e ".[dev]"
 
 3. Generate the Quality/Error Report:
-cmd
+cmd:
 python -m scripts.quality_report
 (This will output quality_report.json directly into your project folder).
 
 4. Run the tests:
-cmd
+cmd:
 python -m pytest
 Expect all 6 tests to pass.
 
 5. Clean up:
 When finished, shut down the background containers to free up system resources:
-cmd
+cmd:
 docker compose down
 
