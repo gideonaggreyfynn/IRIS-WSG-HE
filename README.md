@@ -55,11 +55,9 @@ IIIB		Zone IIIB
 Any other value	Unknown (explicitly flagged)
 
 ## ⚠️ Assumptions & Limitations
-Rate Limiting: The HLNUG WFS service limits requests and may block rapid access. The fixture fallback is provided to ensure reproducible testing without bypassing server restrictions.
-
-Missing Attributes: Where extraction rates or update dates are absent in the source data, they are explicitly stored as NULL.
-
-Staging Only: This module strictly writes to the iris_staging schema and does not interact with production systems (iris_core).
+*   **Rate Limiting:** The HLNUG WFS service limits requests and may block rapid access. The fixture fallback is provided to ensure reproducible testing without bypassing server restrictions.
+*   **Missing Attributes:** Where extraction rates or update dates are absent in the source data, they are explicitly stored as NULL.
+*   **Staging Only:** This module strictly writes to the `iris_staging` schema and does not interact with production systems (`iris_core`).
 
 ## 🚀 Run Instructions
 **Prerequisite:** Ensure Docker Desktop is running.
@@ -67,7 +65,6 @@ Staging Only: This module strictly writes to the iris_staging schema and does no
 **1. Start the database and run the ingestion pipeline:**
 ```cmd
 docker compose up -d --build
-
 (The pipeline will wait for the database to be healthy, run the init.sql script to create the schema, and execute the ingestion. The -d flag runs it in the background so you keep your terminal prompt.)
 
 Wait for Ingestion to Complete:
